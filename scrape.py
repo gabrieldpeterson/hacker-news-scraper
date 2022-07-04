@@ -22,10 +22,16 @@ def create_custom_hn(links, subtext, min_points=0):
 
 
 res = requests.get('https://news.ycombinator.com/news')
+res2 = requests.get('https://news.ycombinator.com/news?p=2')
 soup = BeautifulSoup(res.text, 'html.parser')
+soup2 = BeautifulSoup(res2.text, 'html.parser')
 # print(soup.select('.titlelink')[0].text)
-links = soup.find_all(attrs={'class': 'titlelink'})
-subtext = soup.select('.subtext')
+links1 = soup.find_all(attrs={'class': 'titlelink'})
+links2 = soup2.find_all(attrs={'class': 'titlelink'})
+links = links1 + links2
+subtext1 = soup.select('.subtext')
+subtext2 = soup.select('.subtext')
+subtext = subtext1 + subtext2
 found_votes = links
 
 pprint.pprint(create_custom_hn(links, subtext, 100))
